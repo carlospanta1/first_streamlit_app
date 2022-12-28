@@ -14,6 +14,9 @@ streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 #se extrae la lista de frutas desde el bucket de s3
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 
+#se puso como index el nombre de la fruta para elegir
+my_fruit_list = my_fruit_list.set_index('Fruit')
+
 #se añade una lista de selección para poder elegir la fruta
 streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index))
 
