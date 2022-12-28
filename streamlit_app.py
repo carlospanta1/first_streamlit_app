@@ -11,6 +11,14 @@ streamlit.text('🐔Hard-Boiled Free-Range Egg')
 streamlit.text('🥑🍞Avocado Toast')
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
+#se extrae la lista de frutas desde el bucket de s3
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
+
+#se añade una lista de selección para poder elegir la fruta
+streamtlit.multiselect("Pick some fruits:", list(my_fruit_list.index))
+
+#mostrar la tabla en la página
 streamlit.dataframe(my_fruit_list)
+
+
 
