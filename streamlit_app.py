@@ -20,6 +20,9 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 #se añade una lista de selección para poder elegir la fruta
 streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),['Avocado','Strawberries'])
 
+#se añadió una función para mostrar solo la fruta seleccionada en la lista
+fruits_to_show = my_fruit_list.loc[fruits_selected]
+
 #mostrar la tabla en la página
 streamlit.dataframe(my_fruit_list)
 
