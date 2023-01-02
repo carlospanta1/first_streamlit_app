@@ -31,20 +31,31 @@ streamlit.dataframe(fruits_to_show)
 
 #SECCIÓN PARA MOSTRAR FRUITYVICE API 
 streamlit.header("Fruityvice Fruit Advice!")
+try:
+    #codigo para extraer via streamlit
+    fruit_choice = streamlit.text_input('What fruit would you like information about?')
+    if not fruit_choice:
+        streamlit.error("Please select a fruit to get information.")
+    else:
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+        #extrae la version json de la respuesta y la normaliza
+        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+        #muestra como tabla la información
+        streamlit.dataframe(fruityvice_normalized)
+        
+except URLError as e:
+    streamlit.error()
+          
 
-#codigo para extraer via streamlit
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
 #import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+
 #streamlit.text(fruityvice_response.json()) #solo escribe la data en la pantalla   #estaba originalmente pero ya no se usa
 
-#extrae la version json de la respuesta y la normaliza
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 
-#muestra como tabla la información
-streamlit.dataframe(fruityvice_normalized)
+
+
 streamlit.stop()
 
 #import snowflake.connector
