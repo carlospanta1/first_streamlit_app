@@ -31,17 +31,24 @@ streamlit.dataframe(fruits_to_show)
 
 #SECCIÓN PARA MOSTRAR FRUITYVICE API 
 streamlit.header("Fruityvice Fruit Advice!")
+
+#CREACION DE LA FUNCION
+def get_fruityvice_data(this_fruit_choice):
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+    #extrae la version json de la respuesta y la normaliza
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())  
+    return fruityvice_normalized
+
+#SECCION PARA MOSTRAR FRUITYVICE API
 try:
     #codigo para extraer via streamlit
     fruit_choice = streamlit.text_input('What fruit would you like information about?')
     if not fruit_choice:
         streamlit.error("Please select a fruit to get information.")
     else:
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
-        #extrae la version json de la respuesta y la normaliza
-        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+        back_from_function = get_fruityvice_data(fruit_choice)
         #muestra como tabla la información
-        streamlit.dataframe(fruityvice_normalized)
+        streamlit.dataframe(back_from_function)
         
 except URLError as e:
     streamlit.error()
