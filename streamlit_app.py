@@ -29,6 +29,10 @@ streamlit.dataframe(fruits_to_show)
 #SECCIÓN PARA MOSTRAR FRUITYVICE API 
 streamlit.header("Fruityvice Fruit Advice!")
 
+#codigo para extraer via streamlit
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+streamlit.write('The user entered ', fruit_choice)
+
 import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"watermelon")
 #streamlit.text(fruityvice_response.json()) #solo escribe la data en la pantalla   #estaba originalmente pero ya no se usa
